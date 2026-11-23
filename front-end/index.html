@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoteCore — Organize o conhecimento da sua empresa</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============================================================
+     TELA DE LOGIN / CADASTRO
+     ============================================================ -->
+<main id="loginScreen" class="login-screen">
+  <section class="login-visual" aria-hidden="true">
+    <div class="lv-brand">
+      <img src="assets/logo.svg" alt="">
+      <span>NoteCore</span>
+    </div>
+    <div class="lv-body">
+      <h1 data-i18n="login.heroTitle">Organize suas informações, tarefas e prioridades em um só lugar.</h1>
+      <p data-i18n="login.heroSubtitle">A central de notas usada por equipes que não podem perder o controle do que importa.</p>
+    </div>
+    <div class="lv-stats">
+      <div class="lv-stat"><b data-i18n="login.stat1.value">+12 mil</b><span data-i18n="login.stat1">notas organizadas</span></div>
+      <div class="lv-stat"><b>340</b><span data-i18n="login.stat2">empresas ativas</span></div>
+      <div class="lv-stat"><b>99.9%</b><span data-i18n="login.stat3">de disponibilidade</span></div>
+    </div>
+  </section>
+
+  <section class="login-form-side">
+    <div class="lang-switch" id="langSwitch" role="group" aria-label="Idioma / Language">
+      <button type="button" data-lang="pt">PT</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+
+    <div class="login-form-card">
+      <div class="lf-brand-mobile">
+        <img src="assets/logo.svg" alt="">
+        <span>NoteCore</span>
+      </div>
+
+      <div class="auth-tabs">
+        <button type="button" class="auth-tab active" id="tabLoginBtn" data-i18n="login.tabLogin">Entrar</button>
+        <button type="button" class="auth-tab" id="tabSignupBtn" data-i18n="login.tabSignup">Criar conta</button>
+      </div>
+
+      <!-- ---------------- LOGIN ---------------- -->
+      <div id="loginPane">
+        <h2 data-i18n="login.title">Entrar na sua conta</h2>
+        <p class="lf-sub" data-i18n="login.subtitle">Organize suas informações, tarefas e prioridades em um só lugar.</p>
+
+        <div id="loginBanner" class="form-banner" role="alert"></div>
+
+        <form id="loginForm" novalidate>
+          <div class="field" id="emailField">
+            <label for="loginEmail" data-i18n="login.emailLabel">E-mail corporativo</label>
+            <input class="input" type="email" id="loginEmail" data-i18n-placeholder="login.emailPlaceholder" placeholder="nome@suaempresa.com" autocomplete="username" value="ana.moura@notecore.com">
+            <span class="error-text" data-i18n="login.errorRequired">Preencha e-mail e senha para continuar.</span>
+          </div>
+
+          <div class="field" id="passwordField">
+            <label for="loginPassword" data-i18n="login.passwordLabel">Senha</label>
+            <div class="input-wrap">
+              <input class="input" type="password" id="loginPassword" data-i18n-placeholder="login.passwordPlaceholder" placeholder="Digite sua senha" autocomplete="current-password" value="notecore123">
+              <button type="button" class="toggle-visibility" id="togglePassword" data-i18n-aria="login.showPassword" aria-label="Mostrar senha">
+                <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 20c-7 0-11-7-11-7a19 19 0 0 1 4.2-5.2M9.9 5.2A9.8 9.8 0 0 1 12 5c7 0 11 7 11 7a19 19 0 0 1-2.3 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="error-text" data-i18n="login.errorRequired">Preencha e-mail e senha para continuar.</span>
+          </div>
+
+          <div class="login-row-between">
+            <div class="checkbox-row">
+              <input type="checkbox" id="rememberMe">
+              <label for="rememberMe" data-i18n="login.remember">Lembrar de mim</label>
+            </div>
+            <a href="#" id="forgotPasswordLink" data-i18n="login.forgot">Esqueci minha senha</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-label" data-i18n="login.submit">Entrar</span>
+          </button>
+        </form>
+
+        <p class="auth-switch-line">
+          <span data-i18n="signup.noAccount">Ainda não tem uma conta?</span>
+          <a id="goToSignupLink" data-i18n="login.tabSignup">Criar conta</a>
+        </p>
+      </div>
+
+      <!-- ---------------- CADASTRO ---------------- -->
+      <div id="signupPane" class="hidden">
+        <h2 data-i18n="signup.title">Criar sua conta</h2>
+        <p class="lf-sub" data-i18n="signup.subtitle">Comece a organizar as informações da sua empresa.</p>
+
+        <div id="signupBanner" class="form-banner" role="alert"></div>
+
+        <form id="signupForm" novalidate>
+          <div class="field" id="signupNameField">
+            <label for="signupName" data-i18n="signup.nameLabel">Nome completo</label>
+            <input class="input" type="text" id="signupName" data-i18n-placeholder="signup.namePlaceholder" placeholder="Digite seu nome completo" autocomplete="name">
+            <span class="error-text" data-i18n="signup.errorRequired">Preencha todos os campos para continuar.</span>
+          </div>
+
+          <div class="field" id="signupEmailField">
+            <label for="signupEmail" data-i18n="signup.emailLabel">E-mail corporativo</label>
+            <input class="input" type="email" id="signupEmail" data-i18n-placeholder="signup.emailPlaceholder" placeholder="nome@suaempresa.com" autocomplete="email">
+            <span class="error-text" id="signupEmailError" data-i18n="signup.errorEmailInvalid">Informe um e-mail corporativo válido.</span>
+          </div>
+
+          <div class="field" id="signupPasswordField">
+            <label for="signupPassword" data-i18n="signup.passwordLabel">Senha</label>
+            <div class="input-wrap">
+              <input class="input" type="password" id="signupPassword" data-i18n-placeholder="signup.passwordPlaceholder" placeholder="Crie uma senha (mín. 6 caracteres)" autocomplete="new-password">
+              <button type="button" class="toggle-visibility" data-toggle-for="signupPassword" data-i18n-aria="login.showPassword" aria-label="Mostrar senha">
+                <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 20c-7 0-11-7-11-7a19 19 0 0 1 4.2-5.2M9.9 5.2A9.8 9.8 0 0 1 12 5c7 0 11 7 11 7a19 19 0 0 1-2.3 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="error-text" id="signupPasswordError" data-i18n="signup.errorPasswordShort">A senha deve ter pelo menos 6 caracteres.</span>
+          </div>
+
+          <div class="field" id="signupConfirmField">
+            <label for="signupConfirm" data-i18n="signup.confirmLabel">Confirmar senha</label>
+            <div class="input-wrap">
+              <input class="input" type="password" id="signupConfirm" data-i18n-placeholder="signup.confirmPlaceholder" placeholder="Digite a senha novamente" autocomplete="new-password">
+              <button type="button" class="toggle-visibility" data-toggle-for="signupConfirm" data-i18n-aria="login.showPassword" aria-label="Mostrar senha">
+                <svg class="eye-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 20c-7 0-11-7-11-7a19 19 0 0 1 4.2-5.2M9.9 5.2A9.8 9.8 0 0 1 12 5c7 0 11 7 11 7a19 19 0 0 1-2.3 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <span class="error-text" id="signupConfirmError" data-i18n="signup.errorPasswordMismatch">As senhas não coincidem.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" id="signupSubmitBtn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-label" data-i18n="signup.submit">Criar conta</span>
+          </button>
+        </form>
+
+        <p class="auth-switch-line">
+          <span data-i18n="signup.haveAccount">Já tem uma conta?</span>
+          <a id="goToLoginLink" data-i18n="login.tabLogin">Entrar</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============================================================
+     APLICAÇÃO (DASHBOARD)
+     ============================================================ -->
+<div id="appShell" class="app-shell hidden">
+
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <aside class="sidebar" id="sidebar" data-i18n-aria="a11y.sidebar" aria-label="Navegação principal">
+    <div class="sidebar-brand">
+      <div class="logo-chip"><img src="assets/logo.svg" alt=""></div>
+      <span>NoteCore</span>
+      <button class="sidebar-close-mobile" id="sidebarCloseBtn" data-i18n-aria="a11y.closeMenu" aria-label="Fechar menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" id="sidebarNav" data-i18n-aria="a11y.sections" aria-label="Seções">
+      <!-- injected by JS -->
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <div class="avatar" id="sidebarAvatar">AM</div>
+        <div>
+          <div class="su-name" id="sidebarUserName">Ana Moura</div>
+          <div class="su-email" id="sidebarUserEmail">ana.moura@notecore.com</div>
+        </div>
+      </div>
+      <button class="btn-logout" id="logoutBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+        <span id="logoutLabel">Sair</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main-col">
+    <header class="app-header">
+      <button class="header-menu-toggle" id="menuToggleBtn" data-i18n-aria="a11y.openMenu" aria-label="Abrir menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <div class="header-greeting">
+        <h1 id="headerGreeting">Olá, Ana</h1>
+        <p id="headerSubtitle">Aqui está um resumo das suas notas.</p>
+      </div>
+
+      <div class="header-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input class="input" type="search" id="headerSearchInput" data-i18n-placeholder="header.searchPlaceholder" placeholder="Pesquisar notas..." data-i18n-aria="a11y.search" aria-label="Pesquisar notas">
+      </div>
+
+      <div class="header-actions">
+        <div class="lang-switch lang-switch-inline" role="group" aria-label="Idioma / Language">
+          <button type="button" data-lang="pt">PT</button>
+          <button type="button" data-lang="en">EN</button>
+        </div>
+        <button class="icon-btn" id="notifBtn" data-i18n-aria="header.notifications" aria-label="Notificações" aria-haspopup="true" aria-expanded="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+          <span class="notif-dot" id="notifDot" aria-hidden="true"></span>
+        </button>
+        <div class="notif-panel" id="notifPanel" role="dialog" data-i18n-aria="header.notifications" aria-label="Notificações"></div>
+        <div class="avatar" id="headerAvatar" title="Ana Moura">AM</div>
+        <button class="btn btn-primary" id="newNoteBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+          <span id="newNoteLabel">Nova nota</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-content" id="appContent">
+      <!-- injected by JS per section -->
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODAIS
+     ============================================================ -->
+
+<!-- Criar / Editar nota -->
+<div class="modal-overlay" id="noteModalOverlay">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle">
+    <div class="modal-head">
+      <h3 id="noteModalTitle">Nova nota</h3>
+      <button class="close-btn" data-close-modal="noteModalOverlay" data-i18n-aria="a11y.close" aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <form id="noteForm" novalidate>
+        <!-- Seletor de Tipo de Nota -->
+        <div class="field">
+          <label data-i18n="note.type.label">Tipo de anotação</label>
+          <div class="note-type-selector" id="noteTypeSelector" role="radiogroup">
+            <button type="button" class="note-type-btn active" data-type="TEXT">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+              <span data-i18n="note.type.text">Texto</span>
+            </button>
+            <button type="button" class="note-type-btn" data-type="CHECKLIST">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <span data-i18n="note.type.checklist">Checklist</span>
+            </button>
+            <button type="button" class="note-type-btn" data-type="MARKDOWN">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/><path d="M7 15V9l3 3 3-3v6M17 12l2 2 2-2M19 14V9"/></svg>
+              <span data-i18n="note.type.markdown">Markdown</span>
+            </button>
+            <button type="button" class="note-type-btn" data-type="CODE">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span data-i18n="note.type.code">Código</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="field" id="noteTitleField">
+          <label for="noteTitleInput" data-i18n="field.title.label">Título</label>
+          <input class="input" id="noteTitleInput" maxlength="120" data-i18n-placeholder="field.title.placeholder" placeholder="Digite o título da nota">
+          <span class="error-text" data-i18n="field.title.error">Digite um título para a nota.</span>
+        </div>
+
+        <!-- Seção 1: Texto Simples -->
+        <div class="field note-type-section" id="textContentSection">
+          <label for="noteContentInput" data-i18n="field.content.label">Conteúdo</label>
+          <textarea class="input" id="noteContentInput" data-i18n-placeholder="field.content.placeholder" placeholder="Escreva sua nota..." rows="6"></textarea>
+          <span class="error-text" data-i18n="field.content.error">Escreva o conteúdo da nota.</span>
+        </div>
+
+        <!-- Seção 2: Checklist -->
+        <div class="field note-type-section hidden" id="checklistContentSection">
+          <label data-i18n="note.type.checklist">Itens da Checklist</label>
+          <div class="checklist-builder">
+            <div class="checklist-add-bar">
+              <input class="input" type="text" id="checklistNewItemInput" data-i18n-placeholder="note.checklist.placeholder" placeholder="Digite um item e pressione Enter...">
+              <button type="button" class="btn btn-secondary" id="checklistAddItemBtn" data-i18n="note.checklist.addItem">Adicionar</button>
+            </div>
+            <div class="checklist-items-list" id="checklistItemsList">
+              <!-- Itens injetados via JS -->
+            </div>
+          </div>
+          <span class="error-text" id="checklistErrorText" data-i18n="field.content.error">Adicione ao menos um item à checklist.</span>
+        </div>
+
+        <!-- Seção 3: Markdown com Preview -->
+        <div class="field note-type-section hidden" id="markdownContentSection">
+          <div class="markdown-editor-head">
+            <div class="markdown-toolbar" id="markdownToolbar">
+              <button type="button" class="md-btn" data-md-action="bold" title="Negrito (Ctrl+B)"><b>B</b></button>
+              <button type="button" class="md-btn" data-md-action="italic" title="Itálico (Ctrl+I)"><i>I</i></button>
+              <button type="button" class="md-btn" data-md-action="h2" title="Título H2">H2</button>
+              <button type="button" class="md-btn" data-md-action="h3" title="Título H3">H3</button>
+              <button type="button" class="md-btn" data-md-action="list" title="Lista">● Lista</button>
+              <button type="button" class="md-btn" data-md-action="code" title="Código">&lt;/&gt;</button>
+              <button type="button" class="md-btn" data-md-action="quote" title="Citação">❝</button>
+              <button type="button" class="md-btn" data-md-action="link" title="Link">🔗</button>
+            </div>
+            <div class="markdown-tabs">
+              <button type="button" class="md-tab active" id="mdTabWriteBtn" data-i18n="note.markdown.write">Escrever</button>
+              <button type="button" class="md-tab" id="mdTabPreviewBtn" data-i18n="note.markdown.preview">Pré-visualizar</button>
+            </div>
+          </div>
+          <textarea class="input" id="markdownContentInput" placeholder="# Meu documento Markdown..." rows="8"></textarea>
+          <div class="markdown-preview-pane hidden" id="markdownPreviewPane"></div>
+          <span class="error-text" id="markdownErrorText" data-i18n="field.content.error">Escreva o conteúdo Markdown.</span>
+        </div>
+
+        <!-- Seção 4: Código com Sintaxe -->
+        <div class="field note-type-section hidden" id="codeContentSection">
+          <div class="form-grid-2" style="margin-bottom:12px;">
+            <div class="field" style="margin-bottom:0;">
+              <label for="codeLangSelect" data-i18n="note.code.langLabel">Linguagem de programação</label>
+              <select class="input" id="codeLangSelect">
+                <option value="javascript">JavaScript</option>
+                <option value="typescript">TypeScript</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="sql">SQL</option>
+                <option value="html">HTML</option>
+                <option value="css">CSS</option>
+                <option value="bash">Bash / Shell</option>
+                <option value="json">JSON</option>
+                <option value="yaml">YAML</option>
+                <option value="cpp">C / C++</option>
+                <option value="php">PHP</option>
+                <option value="plaintext">Outro / Texto puro</option>
+              </select>
+            </div>
+          </div>
+          <label for="codeContentInput" data-i18n="note.type.code">Código-fonte</label>
+          <textarea class="input code-editor-input" id="codeContentInput" data-i18n-placeholder="note.code.placeholder" placeholder="// Escreva ou cole o código aqui..." rows="9" spellcheck="false"></textarea>
+          <span class="error-text" id="codeErrorText" data-i18n="field.content.error">Escreva o código da nota.</span>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="noteCategoryInput" data-i18n="field.category.label">Categoria</label>
+            <select class="input" id="noteCategoryInput"></select>
+          </div>
+          <div class="field">
+            <label for="noteDateInput" data-i18n="field.date.label">Data da nota</label>
+            <input class="input" type="date" id="noteDateInput">
+          </div>
+        </div>
+
+        <div class="field">
+          <label data-i18n="field.urgency.label">Nível de urgência</label>
+          <div class="urgency-options" id="noteUrgencyOptions" role="radiogroup" data-i18n-aria="field.urgency.label" aria-label="Nível de urgência">
+            <button type="button" class="urgency-option" data-level="baixa" role="radio" aria-checked="false">Baixa</button>
+            <button type="button" class="urgency-option" data-level="media" role="radio" aria-checked="false">Média</button>
+            <button type="button" class="urgency-option" data-level="alta" role="radio" aria-checked="false">Alta</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="noteTagsInput" data-i18n="field.tags.label">Tags</label>
+          <div class="tags-input-wrap" id="tagsInputWrap">
+            <input id="noteTagsInput" data-i18n-placeholder="field.tags.placeholder" placeholder="Adicionar tags e pressionar Enter" data-i18n-aria="a11y.addTags" aria-label="Adicionar tags">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-secondary" data-close-modal="noteModalOverlay" data-i18n="btn.cancel">Cancelar</button>
+      <button type="button" class="btn btn-primary" id="saveNoteBtn" data-i18n="btn.saveNote">Salvar nota</button>
+    </div>
+  </div>
+</div>
+
+<!-- Visualizar nota -->
+<div class="modal-overlay" id="viewModalOverlay">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="viewModalTitle">
+    <div class="modal-head">
+      <h3 id="viewModalTitle">Título da nota</h3>
+      <button class="close-btn" data-close-modal="viewModalOverlay" data-i18n-aria="a11y.close" aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="view-meta-row" id="viewMetaRow"></div>
+      <div class="view-content" id="viewContentText"></div>
+
+      <!-- Seção de Tarefas Vinculadas -->
+      <div class="view-linked-tasks" id="viewLinkedTasksSection">
+        <div class="vlt-header">
+          <h4 data-i18n="task.linkedTasks">Tarefas vinculadas a esta nota</h4>
+          <button type="button" class="btn btn-sm btn-ghost" id="viewAddLinkedTaskBtn" data-i18n="task.addTaskForNote">+ Nova tarefa para esta nota</button>
+        </div>
+        <div class="vlt-list" id="viewLinkedTasksList"></div>
+      </div>
+
+      <div class="view-dates">
+        <div><b data-i18n="view.createdAt">Criada em</b><span id="viewCreatedAt"></span></div>
+        <div><b data-i18n="view.updatedAt">Última atualização</b><span id="viewUpdatedAt"></span></div>
+      </div>
+    </div>
+    <div class="modal-foot between">
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-ghost" id="viewFavBtn">Favoritar</button>
+        <button class="btn btn-ghost" id="viewDoneBtn">Marcar como concluída</button>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="btn btn-danger" id="viewDeleteBtn" data-i18n="btn.delete">Excluir</button>
+        <button class="btn btn-primary" id="viewEditBtn" data-i18n="btn.edit">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Criar / Editar tarefa -->
+<div class="modal-overlay" id="taskModalOverlay">
+  <div class="modal modal-md" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+    <div class="modal-head">
+      <h3 id="taskModalTitle" data-i18n="task.newTask">Nova tarefa</h3>
+      <button class="close-btn" data-close-modal="taskModalOverlay" data-i18n-aria="a11y.close" aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <form id="taskForm" novalidate>
+        <div class="field" id="taskTitleField">
+          <label for="taskTitleInput" data-i18n="task.titleLabel">Título da tarefa</label>
+          <input class="input" id="taskTitleInput" data-i18n-placeholder="task.titlePlaceholder" placeholder="Digite o título da tarefa">
+          <span class="error-text" data-i18n="task.titleError">Informe o título da tarefa.</span>
+        </div>
+
+        <div class="field">
+          <label for="taskRelatedNoteInput" data-i18n="task.relatedNoteLabel">Nota vinculada (opcional)</label>
+          <select class="input" id="taskRelatedNoteInput"></select>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="field">
+            <label for="taskDateInput" data-i18n="task.dateLabel">Data</label>
+            <input class="input" type="date" id="taskDateInput">
+          </div>
+          <div class="field">
+            <label for="taskStatusInput" data-i18n="task.statusLabel">Status</label>
+            <select class="input" id="taskStatusInput">
+              <option value="pendente" data-i18n="status.pendente">Pendente</option>
+              <option value="andamento" data-i18n="status.andamento">Em andamento</option>
+              <option value="concluida" data-i18n="status.concluida">Concluída</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button type="button" class="btn btn-secondary" data-close-modal="taskModalOverlay" data-i18n="btn.cancel">Cancelar</button>
+      <button type="button" class="btn btn-primary" id="saveTaskBtn" data-i18n="task.saveTask">Salvar tarefa</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmação de exclusão de tarefa -->
+<div class="modal-overlay" id="taskDeleteModalOverlay">
+  <div class="modal modal-sm" role="dialog" aria-modal="true" aria-labelledby="taskDeleteTitle">
+    <div class="modal-body" style="padding-top:28px;">
+      <div class="confirm-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </div>
+      <h3 id="taskDeleteTitle" data-i18n="task.deleteTitle">Excluir esta tarefa?</h3>
+      <p style="font-size:13.5px; color:var(--text-muted); margin-top:8px; line-height:1.55;" data-i18n="task.deleteMessage">Tem certeza de que deseja excluir esta tarefa permanentemente?</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" data-close-modal="taskDeleteModalOverlay" data-i18n="btn.cancel">Cancelar</button>
+      <button class="btn btn-danger" id="confirmTaskDeleteBtn" data-i18n="task.deleteConfirm">Excluir tarefa</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmação de exclusão -->
+<div class="modal-overlay" id="deleteModalOverlay">
+  <div class="modal modal-sm" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
+    <div class="modal-body" style="padding-top:28px;">
+      <div class="confirm-icon" id="deleteConfirmIcon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </div>
+      <h3 id="deleteModalTitle" data-i18n="delete.title">Excluir esta nota?</h3>
+      <p style="font-size:13.5px; color:var(--text-muted); margin-top:8px; line-height:1.55;" id="deleteModalMessage" data-i18n="delete.message">Tem certeza de que deseja excluir esta nota? Ela será movida para a lixeira.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" data-close-modal="deleteModalOverlay" data-i18n="btn.cancel">Cancelar</button>
+      <button class="btn btn-danger" id="confirmDeleteBtn" data-i18n="delete.confirm">Excluir nota</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirmação de exclusão permanente (lixeira) -->
+<div class="modal-overlay" id="permaDeleteModalOverlay">
+  <div class="modal modal-sm" role="dialog" aria-modal="true" aria-labelledby="permaDeleteTitle">
+    <div class="modal-body" style="padding-top:28px;">
+      <div class="confirm-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+      </div>
+      <h3 id="permaDeleteTitle" data-i18n="perma.title">Excluir permanentemente?</h3>
+      <p style="font-size:13.5px; color:var(--text-muted); margin-top:8px; line-height:1.55;" data-i18n="perma.message">Esta ação não pode ser desfeita. A nota será removida definitivamente do NoteCore.</p>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-secondary" data-close-modal="permaDeleteModalOverlay" data-i18n="btn.cancel">Cancelar</button>
+      <button class="btn btn-danger" id="confirmPermaDeleteBtn" data-i18n="perma.confirm">Excluir permanentemente</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/data.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
